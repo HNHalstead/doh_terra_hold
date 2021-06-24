@@ -1,0 +1,7 @@
+version: 1.2
+workflows:
+ - name: measles_mumps_assembly
+   subclass: WDL
+   primaryDescriptorPath: /pipes/WDL/workflows/measles_mumps_assembly.wdl
+   testParameterFiles:
+    - empty.json
