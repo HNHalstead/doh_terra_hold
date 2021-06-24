@@ -5,4 +5,3 @@ workflows:
    primaryDescriptorPath: /pipes/WDL/workflows/measles_mumps_assembly.wdl
    testParameterFiles:
     - empty.json
-    
