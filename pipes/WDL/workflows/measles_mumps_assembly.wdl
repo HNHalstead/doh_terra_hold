@@ -1,5 +1,5 @@
 version 1.0
-import "../tasks/task_trim.wdl" as trims
+import "pipes/WDL/tasks/task_trim.wdl" as trims
 workflow mm_trim_and_assemble {
   meta {
         description: "Assembles single end Illumina reads for Measles and Mumps."
