@@ -1,7 +1,7 @@
 version 1.0
 
 import "tasks/tasks_trim.wdl" as trims
-import "./../tasks_trim.wdl" as trims1
+import "/../tasks_trim.wdl" as trims1
 
 workflow mm_trim_and_assemble {
   meta {
