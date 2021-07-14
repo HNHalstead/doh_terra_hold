@@ -1,6 +1,6 @@
 version 1.0
 
-import "https://github.com/HNHalstead/doh_terra_hold/blob/dev/pipes/WDL/tasks/tasks_trim.wdl" as trims
+import "/blob/dev/pipes/WDL/tasks/tasks_trim.wdl" as trims
 
 workflow mm_trim_and_assemble {
   meta {
