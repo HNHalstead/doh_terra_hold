@@ -1,6 +1,6 @@
 version 1.0
 
-import "tasks/tasks_trim.wdl" as trim
+import "tasks/tasks_trim.wdl" as mm_trim
 
 
 workflow mm_trim_and_assemble {
@@ -15,7 +15,7 @@ workflow mm_trim_and_assemble {
     File      read1
   }
 
-  call trim {
+  call mm_trim.trim {
     input:
       sra_id=sra_id,
       read1=read1
