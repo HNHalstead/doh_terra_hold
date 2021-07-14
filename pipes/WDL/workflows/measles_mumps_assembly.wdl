@@ -1,6 +1,6 @@
 version 1.0
 
-import "/blob/dev/pipes/WDL/tasks/tasks_trim.wdl" as trims
+import "tasks_trim.wdl" as trims
 
 workflow mm_trim_and_assemble {
   meta {
