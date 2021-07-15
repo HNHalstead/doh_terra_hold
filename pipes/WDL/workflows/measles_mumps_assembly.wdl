@@ -4,11 +4,6 @@ import "tasks/tasks_trim.wdl" as mm_trim
 
 
 workflow mm_trim_and_assemble {
-  meta {
-        description: "Assembles single end Illumina reads for Measles and Mumps."
-        author: "Holly Halstead"
-        email:  "holly.halstead@doh.wa.gov"
-    }
 
   input {
     String    sra_id
