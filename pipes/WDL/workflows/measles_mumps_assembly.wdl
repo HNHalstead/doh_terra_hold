@@ -28,8 +28,8 @@ workflow mm_trim_and_assemble {
   call mm_bowtie2.bowtie2_se {
   input:
     sra_id=sra_id,
-    read1_trim=trim.read1_trim
-    reference_seq=bowtie2_se.reference_seq
+    read1_trim=trim.read1_trim,
+    reference_seq=reference_seq
 }
 
   output {
