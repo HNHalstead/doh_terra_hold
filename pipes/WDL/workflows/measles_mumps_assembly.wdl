@@ -30,7 +30,7 @@ workflow mm_trim_and_assemble {
     read1_trim=trim.read1_trim,
     reference_seq=reference_seq
   }
-  
+
   output {
     File    read1_trim=trim.read1_trim
     File    fastqc_html=fastqc.fastqc_html
@@ -48,7 +48,7 @@ task bowtie2_se {
   }
 
   command {
-	set -euo pipefail
+    set -euo pipefail
   bowtie2-build ${reference_seq} mumps_ref
   bowtie2 -x mumps_ref -U ${read1_trim} -S ${sra_id}.sam --local
   ls
