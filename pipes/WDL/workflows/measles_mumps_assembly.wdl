@@ -48,7 +48,6 @@ task bowtie2_se {
   }
 
   command {
-    set -euo pipefail
   bowtie2-build ${reference_seq} mumps_ref
   bowtie2 -x mumps_ref -U ${read1_trim} -S ${sra_id}.sam --local
   ls
