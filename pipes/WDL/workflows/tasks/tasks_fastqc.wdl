@@ -10,6 +10,7 @@ task fastqc {
   command {
 	set -euo pipefail
 	fastqc ${read1_trim} -o .
+  echo "sup"
   }
 
   output {
