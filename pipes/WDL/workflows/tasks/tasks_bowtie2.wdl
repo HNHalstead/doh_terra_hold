@@ -3,7 +3,7 @@ version 1.0
 task bowtie2_se {
 
   input {
-    String     sra_id
+    String   sra_id
     File     read1_trim
     File     reference_seq
   }
