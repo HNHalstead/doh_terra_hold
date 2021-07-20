@@ -17,7 +17,7 @@ task bowtie2_se {
   ls
   ls>ls.txt
   ls /data
-  ls /data> ls_data.txt
+  ls /data>ls_data.txt
   }
 
   output {
