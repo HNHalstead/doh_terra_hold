@@ -21,9 +21,9 @@ workflow mm_trim_and_assemble {
   }
 
     call mm_fastqc.fastqc {
-    input:
-      sra_id=sra_id,
-      read1_trim=trim.read1_trim
+      input:
+        sra_id=sra_id,
+        read1_trim=trim.read1_trim
   }
 
   call mm_bowtie2.bowtie2_se {
