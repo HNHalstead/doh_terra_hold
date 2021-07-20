@@ -1,6 +1,7 @@
 version 1.0
 
 import "tasks/tasks_trim.wdl" as mm_trim
+import "tasks/tasks_fastqc.wdl" as mm_fastqc
 
 
 workflow mm_trim_and_assemble {
@@ -16,7 +17,7 @@ workflow mm_trim_and_assemble {
       read1=read1
   }
 
-    call fastqc {
+    call mm_fastqc.fastqc {
     input:
       sra_id=sra_id,
       read1_trim=trim.read1_trim
@@ -27,32 +28,5 @@ workflow mm_trim_and_assemble {
     File    fastqc_html=fastqc.fastqc_html
    #Float   gc_content=fastqc.gc_content
 
-  }
-}
-
-
-task fastqc {
-
-  input {
-    String    sra_id
-    File      read1_trim
-  }
-
-  command {
-	set -euo pipefail
-	fastqc ${read1_trim} -o .
-  }
-
-  output {
-    File    fastqc_html=glob("*fastqc.html")[0]
-    File	fastqc_zip=glob("*fastqc.zip")[0]
-  }
-
-  runtime {
-    docker:       "staphb/fastqc:0.11.8"
-    memory:       "8 GB"
-    cpu:          4
-    disks:        "local-disk 100 SSD"
-    preemptible:  1
   }
 }
