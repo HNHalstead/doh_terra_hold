@@ -12,10 +12,6 @@ task bowtie2_se {
   command {
   bowtie2-build ${reference_seq} mumps_ref
   bowtie2 -x mumps_ref -U ${read1_trim} -S ${sra_id}.sam --local
-  ls
-  ls>ls.txt
-  ls /data
-  ls /data>ls_data.txt
   }
 
   output {
