@@ -29,6 +29,7 @@ workflow mm_trim_and_assemble {
     sra_id=sra_id,
     read1_trim=trim.read1_trim,
     reference_seq=reference_seq
+  }
 }
 
 task bowtie2_se {
