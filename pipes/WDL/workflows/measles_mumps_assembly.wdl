@@ -1,5 +1,6 @@
 version 1.0
 
+
 import "tasks/tasks_trim.wdl" as mm_trim
 import "tasks/tasks_fastqc.wdl" as mm_fastqc
 import "tasks/tasks_bowtie2.wdl" as mm_bowtie2
