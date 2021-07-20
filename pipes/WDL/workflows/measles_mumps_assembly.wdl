@@ -30,6 +30,14 @@ workflow mm_trim_and_assemble {
     read1_trim=trim.read1_trim,
     reference_seq=reference_seq
   }
+  
+  output {
+    File    read1_trim=trim.read1_trim
+    File    fastqc_html=fastqc.fastqc_html
+    File    sam_file=bowtie2_se.samfile
+   #Float   gc_content=fastqc.gc_content
+
+  }
 }
 
 task bowtie2_se {
@@ -59,14 +67,5 @@ task bowtie2_se {
     cpu:          4
     disks:        "local-disk 100 SSD"
     preemptible:  1
-  }
-}
-
-  output {
-    File    read1_trim=trim.read1_trim
-    File    fastqc_html=fastqc.fastqc_html
-    File    sam_file=bowtie2_se.samfile
-   #Float   gc_content=fastqc.gc_content
-
   }
 }
