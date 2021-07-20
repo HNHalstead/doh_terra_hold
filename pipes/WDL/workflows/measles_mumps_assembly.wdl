@@ -2,9 +2,7 @@ version 1.0
 
 import "tasks/tasks_trim.wdl" as mm_trim
 import "tasks/tasks_fastqc.wdl" as mm_fastqc
-
-import "tasks/tasks_bowtie2.wdl" as mm_bowtie2
-
+#import "tasks/tasks_bowtie2.wdl" as mm_bowtie2
 
 workflow mm_trim_and_assemble {
 
@@ -26,11 +24,41 @@ workflow mm_trim_and_assemble {
         read1_trim=trim.read1_trim
   }
 
-  call mm_bowtie2.bowtie2_se {
+  call bowtie2_se {
   input:
     sra_id=sra_id,
     read1_trim=trim.read1_trim,
     reference_seq=reference_seq
+}
+
+task bowtie2_se {
+  input {
+    String  sra_id
+    File    read1_trim
+    File    reference_seq
+  }
+
+  command {
+	set -euo pipefail
+  bowtie2-build ${reference_seq} mumps_ref
+  bowtie2 -x mumps_ref -U ${read1_trim} -S ${sra_id}.sam --local
+  ls
+  ls>ls.txt
+  ls /data
+  ls /data>ls_data.txt
+  }
+
+  output {
+    File    samfile="${sra_id}.sam"
+  }
+
+  runtime {
+    docker:       "quay.io/biocontainers/bowtie2:2.4.4--py38h72fc82f_0"
+    memory:       "8 GB"
+    cpu:          4
+    disks:        "local-disk 100 SSD"
+    preemptible:  1
+  }
 }
 
   output {
