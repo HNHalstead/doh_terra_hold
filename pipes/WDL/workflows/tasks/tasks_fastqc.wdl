@@ -8,7 +8,7 @@ task fastqc {
   }
 
   command {
-	set -euo pipefail
+    set -euo pipefail
 	fastqc ${read1_trim} -o .
   }
 
