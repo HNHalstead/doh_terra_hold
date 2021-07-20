@@ -12,7 +12,7 @@ task bowtie2_se {
 	set -euo pipefail
 	#fastqc ${read1_trim} -o .
   bowtie2-build ${reference_seq} mumps_ref
-  bowtie2 -x mumps_ref -U SRR12100584_trimmed.fastq.gz -S ${sra_id}.sam --local
+  bowtie2 -x mumps_ref -U ${read1_trim} -S ${sra_id}.sam --local
   ls
   ls>ls.txt
   ls /data
