@@ -3,7 +3,7 @@ version 1.0
 import "tasks/tasks_trim.wdl" as mm_trim
 import "tasks/tasks_fastqc.wdl" as mm_fastqc
 import "tasks/tasks_bowtie2.wdl" as mm_bowtie2
-import "tasls/tasks_samtools.wdl" as mm_samtools
+import "tasks/tasks_samtools.wdl" as mm_samtools
 
 workflow mm_trim_and_assemble {
 
