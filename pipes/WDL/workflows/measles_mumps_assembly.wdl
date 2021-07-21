@@ -41,6 +41,9 @@ workflow mm_trim_and_assemble {
     File    read1_trim=trim.read1_trim
     File    fastqc_html=fastqc.fastqc_html
     File    sam_file=bowtie2_se.samfile
+    File    bamfile=sam_to_bam.bamfile
+    File	sorted_bam=sam_to_bam.sorted_bam
+    File	indexed_bam=sam_to_bam.indexed_bam
    #Float   gc_content=fastqc.gc_content
 
   }

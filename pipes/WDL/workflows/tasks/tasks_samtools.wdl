@@ -16,7 +16,7 @@ task sam_to_bam {
   output {
     File    bamfile="${sra_id}.bam"
     File	sorted_bam="${sra_id}.sorted.bam"
-    File	sorted_bam="${sra_id}.sorted.bam.bai"
+    File	indexed_bam="${sra_id}.sorted.bam.bai"
   }
 
   runtime {
