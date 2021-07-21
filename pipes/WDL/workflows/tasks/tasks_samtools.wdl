@@ -8,9 +8,9 @@ task sam_to_bam {
   }
 
   command {
-	samtools view -S -b ${samfile}>${sra_id}.bam
-  samtools sort ${sra_id}.bam -o ${sra_id}.sorted.bam
-	samtools index ${sra_id}.sorted.bam
+    samtools view -S -b ${samfile}>${sra_id}.bam
+    samtools sort ${sra_id}.bam -o ${sra_id}.sorted.bam
+    samtools index ${sra_id}.sorted.bam
   }
 
   output {

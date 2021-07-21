@@ -8,8 +8,8 @@ task bowtie2_se {
   }
 
   command {
-  bowtie2-build ${reference_seq} mumps_ref
-  bowtie2 -x mumps_ref -U ${read1_trim} -S ${sra_id}.sam --local
+    bowtie2-build ${reference_seq} mumps_ref
+    bowtie2 -x mumps_ref -U ${read1_trim} -S ${sra_id}.sam --local
   }
 
   output {
