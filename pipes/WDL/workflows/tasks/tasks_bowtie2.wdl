@@ -1,7 +1,5 @@
 version 1.0
 
-
-
 task bowtie2_se {
   input {
     String  sra_id
