@@ -36,6 +36,7 @@ workflow mm_trim_and_assemble {
     input:
       sra_id=sra_id,
       samfile=bowtie2_se.samfile
+  }
 
   output {
     File    read1_trim=trim.read1_trim
