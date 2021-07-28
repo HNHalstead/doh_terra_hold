@@ -42,7 +42,6 @@ task kraken2 {
   command{
     virus=~{virus_name}# date and version control
     virus=$(echo $virus | tr '[:upper:]' '[:lower:]')
-    #virus=${virus^^}
     if [ $virus == "MUMPS" ]; then
       virus="Mumps"
       echo $virus
