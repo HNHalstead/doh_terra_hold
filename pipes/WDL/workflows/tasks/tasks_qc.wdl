@@ -40,8 +40,8 @@ task kraken2 {
   }
 
   command{
-    virus="${virus_name}"# date and version control
-    virus=${$virus^^}
+    virus="{virus_name}"# date and version control
+    virus=${virus^^}
     if [ $virus == "MUMPS" ]; then
       virus="Mumps"
       echo $virus
