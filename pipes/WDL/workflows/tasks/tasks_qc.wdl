@@ -59,11 +59,11 @@ task kraken2 {
       --threads ${cpus} \
       --db ${kraken2_db} \
       ${read1} ${read2} \
-      --report ${samplename}_kraken2_report.txt
+      --report ${sra_id}_kraken2_report.txt
 
-    percentage_human=$(grep "Homo sapiens" ${samplename}_kraken2_report.txt | cut -f 1)
+    percentage_human=$(grep "Homo sapiens" ${sra_id}_kraken2_report.txt | cut -f 1)
      # | tee PERCENT_HUMAN
-    percentage_virus=$(grep $virus ${samplename}_kraken2_report.txt | cut -f1 )
+    percentage_virus=$(grep $virus ${sra_id}_kraken2_report.txt | cut -f1 )
      # | tee PERCENT_COV
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
     if [ -z "$percentage_virus" ] ; then percentage_sc2="0" ; fi
@@ -74,7 +74,7 @@ task kraken2 {
   output {
     String     date          = read_string("DATE")
     String     version       = read_string("VERSION")
-    File 	     kraken_report = "${samplename}_kraken2_report.txt"
+    File 	     kraken_report = "${sra_id}_kraken2_report.txt"
     Float 	   percent_human = read_string("PERCENT_HUMAN")
     Float 	   percent_virus   = read_string("PERCENT_VIRUS")
   }
