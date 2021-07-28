@@ -65,7 +65,7 @@ workflow mm_trim_and_assemble {
     File    sorted_bam=sam_to_bam.sorted_bam
     File    indexed_bam=sam_to_bam.indexed_bam
     File    kraken2_report=kraken2.kraken_report
-    Float   percent_human=kraken2.kraken2.percent_human
+    Float   percent_human=kraken2.percent_human
     Float   percent_virus=kraken2.percent_virus
    #Float   gc_content=fastqc.gc_content
 
