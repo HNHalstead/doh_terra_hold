@@ -81,7 +81,7 @@ task kraken2 {
 
   runtime {
     docker:       "staphb/kraken2:2.0.9-beta"
-    memory:       "8 GB"
+    memory:       "16 GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
     preemptible:  0
