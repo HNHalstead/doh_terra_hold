@@ -80,7 +80,7 @@ task kraken2 {
   }
 
   runtime {
-    docker:       "2.0.9-beta"
+    docker:       "staphb/2.0.9-beta"
     memory:       "8 GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
