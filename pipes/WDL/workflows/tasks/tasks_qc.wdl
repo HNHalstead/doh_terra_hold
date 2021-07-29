@@ -1,7 +1,6 @@
 version 1.0
 
 task fastqc {
-
   input {
     String    sra_id
     File      read1_trim
@@ -11,8 +10,8 @@ task fastqc {
   command {
 	set -euo pipefail
 	fastqc ${read1_trim} -o . /fastqc ${read2_trim} -o .
-  date | tee DATE
-  fastqc --version | head -n1 | tee VERSION
+	date | tee DATE
+	fastqc --version | head -n1 | tee VERSION
   }
 
   output {
