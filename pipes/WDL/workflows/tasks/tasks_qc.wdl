@@ -40,12 +40,12 @@ task kraken2 {
   }
 
   command{
-    virus=~{virus_name}# date and version control
+    /* virus=~{virus_name}# date and version control
     virus=$(echo $virus | tr '[:upper:]' '[:lower:]')
     if [ $virus == "MUMPS" ]; then
       virus="Mumps"
       echo $virus
-    fi
+    fi */
 
     date | tee DATE
     kraken2 --version | head -n1 | tee VERSION
@@ -63,7 +63,7 @@ task kraken2 {
 
     percentage_human=$(grep "Homo sapiens" ${sra_id}_kraken2_report.txt | cut -f 1)
      # | tee PERCENT_HUMAN
-    percentage_virus=$(grep $virus ${sra_id}_kraken2_report.txt | cut -f1 )
+    percentage_virus=$(grep ${virus_name} ${sra_id}_kraken2_report.txt | cut -f1 )
     echo $virus "grepped virus" $percentage_virus
      # | tee PERCENT_COV
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
