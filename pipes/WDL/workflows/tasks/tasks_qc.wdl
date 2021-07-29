@@ -64,7 +64,7 @@ task kraken2 {
     percentage_human=$(grep "Homo sapiens" ${sra_id}_kraken2_report.txt | cut -f 1)
      # | tee PERCENT_HUMAN
     percentage_virus=$(grep $virus ${sra_id}_kraken2_report.txt | cut -f1 )
-    echo "grepped virus" $percentage_virus
+    echo $virus "grepped virus" $percentage_virus
      # | tee PERCENT_COV
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
     if [ -z "$percentage_virus" ] ; then percentage_virus="bananas" ; fi
@@ -80,6 +80,7 @@ task kraken2 {
     File 	     kraken_report = "${sra_id}_kraken2_report.txt"
     Float 	   percent_human = read_string("PERCENT_HUMAN")
     Float 	   percent_virus   = read_string("PERCENT_VIRUS")
+    File       ls ="ls.txt"
   }
 
   runtime {
