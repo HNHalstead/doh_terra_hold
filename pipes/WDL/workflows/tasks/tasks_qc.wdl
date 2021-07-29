@@ -40,13 +40,6 @@ task kraken2 {
   }
 
   command{
-    /* virus=~{virus_name}# date and version control
-    virus=$(echo $virus | tr '[:upper:]' '[:lower:]')
-    if [ $virus == "MUMPS" ]; then
-      virus="Mumps"
-      echo $virus
-    fi */
-
     date | tee DATE
     kraken2 --version | head -n1 | tee VERSION
     num_reads=$(ls *fastq.gz 2> /dev/nul | wc -l)
