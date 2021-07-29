@@ -59,12 +59,8 @@ task kraken2 {
     percentage_virus=$(grep ${virus_name} ${sra_id}_kraken2_report.txt | cut -f1 )
     echo $virus "grepped virus" $percentage_virus
      # | tee PERCENT_COV
-    if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
-    if [ -z "$percentage_virus" ] ; then percentage_virus="bananas" ; fi
-    echo "percent_human" $percentage_human | tee PERCENT_HUMAN
-    echo "percent_virus" $percentage_virus | tee PERCENT_VIRUS
-
-    ls>ls.txt
+    if [ -z "$percentage_human" ] ; then percentage_human="0.00" ; fi
+    if [ -z "$percentage_virus" ] ; then percentage_virus="0.00" ; fi
   }
 
   output {
@@ -73,7 +69,6 @@ task kraken2 {
     File 	     kraken_report = "${sra_id}_kraken2_report.txt"
     Float 	   percent_human = read_string("PERCENT_HUMAN")
     Float 	   percent_virus   = read_string("PERCENT_VIRUS")
-    File       ls ="ls.txt"
   }
 
   runtime {
