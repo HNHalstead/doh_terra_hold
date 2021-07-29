@@ -63,13 +63,15 @@ task kraken2 {
 
     percentage_human=$(grep "Homo sapiens" ${sra_id}_kraken2_report.txt | cut -f 1)
      # | tee PERCENT_HUMAN
-    percentage_virus=$(grep -i $virus ${sra_id}_kraken2_report.txt | cut -f1 )
-    echo $percentage_virus
+    percentage_virus=$(grep $virus ${sra_id}_kraken2_report.txt | cut -f1 )
+    echo "grepped virus" $percentage_virus
      # | tee PERCENT_COV
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
-    if [ -z "$percentage_virus" ] ; then percentage_virus="0" ; fi
-    echo $percentage_human | tee PERCENT_HUMAN
-    echo $percentage_virus | tee PERCENT_VIRUS
+    if [ -z "$percentage_virus" ] ; then percentage_virus="bananas" ; fi
+    echo "percent_human" $percentage_human | tee PERCENT_HUMAN
+    echo "percent_virus" $percentage_virus | tee PERCENT_VIRUS
+
+    ls>ls.txt
   }
 
   output {
