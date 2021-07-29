@@ -11,6 +11,8 @@ task fastqc {
   command {
 	set -euo pipefail
 	fastqc ${read1_trim} -o . /fastqc ${read2_trim} -o .
+  date | tee DATE
+  fastqc --version | head -n1 | tee VERSION
   }
 
   output {
@@ -18,6 +20,8 @@ task fastqc {
     File	fastqc_zip_r1=glob("*fastqc.zip")[0]
     File  fastqc_html_r2=glob("*fastqc.html")[1]
     File	fastqc_zip_r2=glob("*fastqc.zip")[1]
+    String     date          = read_string("DATE")
+    String     version       = read_string("VERSION")
   }
 
   runtime {

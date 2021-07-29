@@ -9,12 +9,17 @@ task bowtie2_se {
   }
 
   command {
+    date | tee DATE
+    bowtie2 --version | head -n1 | tee VERSION
+
     bowtie2-build ${reference_seq} mumps_ref
     bowtie2 -x mumps_ref -U ${read1_trim},${read2_trim} -S ${sra_id}.sam --local
   }
 
   output {
     File    samfile="${sra_id}.sam"
+    String     date          = read_string("DATE")
+    String     version       = read_string("VERSION")
   }
 
   runtime {
