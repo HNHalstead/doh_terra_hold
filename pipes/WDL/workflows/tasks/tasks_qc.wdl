@@ -61,7 +61,7 @@ task fastqc_se {
 
   runtime {
     docker:       "staphb/fastqc:0.11.8"
-    memory:       "8 GB"
+    memory:       "16 GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
     preemptible:  1
