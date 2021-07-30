@@ -3,15 +3,18 @@ version 1.0
 task fastqc {
   input {
     String    sra_id
-    File      read1_trim
-    File      read2_trim
+    File      read1
+    File      read2
+    Int?      cpus = 2
   }
 
   command {
     set -euo pipefail
-    fastqc ${read1_trim} -o . /fastqc ${read2_trim} -o .
+    fastqc ${read1_trim} -o $PWD --threads ${cpus}/fastqc ${read2_trim} -o $PWD --threads ${cpus}
     date | tee DATE
-    fastqc --version | head -n1 | tee VERSION
+    fastqc --version | hgrep FastQC | tee VERSION
+    ls
+    ls>ls.txt
   }
 
   output {

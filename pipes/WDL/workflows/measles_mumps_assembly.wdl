@@ -13,7 +13,7 @@ workflow mm_trim_and_assemble {
     File      read2
     File      reference_seq
     String?     kraken2_db = "/kraken2-db"
-    Int?        cpus=4
+    Int?        Kraken2_cpus=4
     String      virus_name="Mumps"
   }
 
@@ -24,11 +24,11 @@ workflow mm_trim_and_assemble {
       read2=read2
   }
 
-  call mm_qc.fastqc {
+  call mm_qc.fastqc as fastqc_trim {
     input:
       sra_id=sra_id,
-      read1_trim=trim.read1_trim,
-      read2_trim=trim.read2_trim
+      read1=trim.read1_trim,
+      read2=trim.read2_trim
   }
 
   call mm_qc.kraken2 {
@@ -37,7 +37,7 @@ workflow mm_trim_and_assemble {
       read1=read1,
       read2=read2,
       kraken2_db=kraken2_db,
-      cpus=cpus,
+      cpus=kraken2_cpus,
       virus_name=virus_name
   }
 
