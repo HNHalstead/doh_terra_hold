@@ -75,18 +75,18 @@ workflow mm_trim_and_assemble {
 
     File    read1_trim=trim.read1_trim
     File    read2_trim=trim.read2_trim
-    File    fastqc_html_r1=fastqc_trim_r1.fastqc_html
-    File    fastqc_html_r2=fastqc_trim_r2.fastqc_html
-    String  total_sequences_trimmed_r1=fastqc_trim_r1.total_sequences
-    String  total_sequences_trimmed_r2=fastqc_trim_r2.total_sequences
+    File    r1_fastqc_html_trimmed=fastqc_trim_r1.fastqc_html
+    File    r2_fastqc_html_trimmed=fastqc_trim_r2.fastqc_html
+    String  r1_total_sequences_trimmed=fastqc_trim_r1.total_sequences
+    String  r2_total_sequences_trimmed=fastqc_trim_r2.total_sequences
+    String  r1_percent_gc_trimmed=fastqc_trim_r1.percent_gc
+    String  r2_percent_gc_trimmed=fastqc_trim_r2.percent_gc
     #File    sam_file=bowtie2_se.samfile
     File    bamfile=sam_to_bam.bamfile
     File    sorted_bam=sam_to_bam.sorted_bam
     File    indexed_bam=sam_to_bam.indexed_bam
     File    kraken2_report=kraken2.kraken_report
     Float   percent_human=kraken2.percent_human
-    Float   percent_virus=kraken2.percent_virus
-   #Float   gc_content=fastqc.gc_content
 
   }
 }

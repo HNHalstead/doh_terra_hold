@@ -52,6 +52,7 @@ task fastqc_se {
     fastqc --version | hgrep FastQC | tee VERSION
 
     unzip -p ${sra_id}_trimmed_fastqc.zip */fastqc_data.txt | grep "Total Sequences" | cut -f 2 | tee READ_SEQS
+    grep "%GC" */fastqc_data.txt | cut -f 2 | tee PERCENT_GC
   }
 
   output {
@@ -60,6 +61,7 @@ task fastqc_se {
     String	date=read_string("DATE")
     String	version=read_string("VERSION")
     String	total_sequences=read_string("READ_SEQS")
+    String  percent_gc=read_string("PERCENT_GC")
   }
 
   runtime {
