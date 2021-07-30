@@ -50,6 +50,8 @@ task fastqc_se {
     fastqc ${read} -o $PWD --threads ${cpus}
     date | tee DATE
     fastqc --version | hgrep FastQC | tee VERSION
+
+    unzip -p ${sra_id}_trimmed_fastqc.zip */fastqc_data.txt | grep "Total Sequences" | cut -f 2 | tee READ_SEQS
   }
 
   output {
@@ -57,6 +59,7 @@ task fastqc_se {
     File	fastqc_zip=glob("*fastqc.zip")[0]
     String	date=read_string("DATE")
     String	version=read_string("VERSION")
+    String	total_sequences=read_string("READ_SEQS")
   }
 
   runtime {

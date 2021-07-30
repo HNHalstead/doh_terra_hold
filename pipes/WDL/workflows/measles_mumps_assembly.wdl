@@ -2,8 +2,7 @@ version 1.0
 
 import "tasks/tasks_trim.wdl" as mm_trim
 import "tasks/tasks_qc.wdl" as mm_qc
-import "tasks/tasks_bowtie2.wdl" as mm_bowtie2
-import "tasks/tasks_samtools.wdl" as mm_samtools
+import "tasks/tasks_assembly_consensus.wdl" as mm_assembly_consensus
 
 workflow mm_trim_and_assemble {
 
@@ -13,6 +12,18 @@ workflow mm_trim_and_assemble {
     File      read2
     File      reference_seq
     String      virus_name="Mumps"
+  }
+
+  call mm_qc.fastqc_se as fastqc_raw_r1 {
+    input:
+      sra_id=sra_id,
+      read=read1,
+  }
+
+  call mm_qc.fastqc_se as fastqc_raw_r2 {
+    input:
+      sra_id=sra_id,
+      read=read2
   }
 
   call mm_trim.trim {
@@ -42,7 +53,7 @@ workflow mm_trim_and_assemble {
       virus_name=virus_name
   }
 
-  call mm_bowtie2.bowtie2_se {
+  call mm_assembly_consensus.bowtie2_se {
     input:
       sra_id=sra_id,
       read1_trim=trim.read1_trim,
@@ -50,17 +61,24 @@ workflow mm_trim_and_assemble {
       reference_seq=reference_seq
   }
 
-  call mm_samtools.sam_to_bam {
+  call mm_assembly_consensus.sam_to_bam {
     input:
       sra_id=sra_id,
       samfile=bowtie2_se.samfile
   }
 
   output {
+    File    r1_fastqc_html_raw=fastqc_raw_r1.fastqc_html
+    File    r2_fastqc_html_raw=fastqc_raw_r2.fastqc_html
+    String  r1_total_sequences_raw=fastqc_raw_r1.total_sequences
+    String  r2_total_sequences_raw=fastqc_raw_r2.total_sequences
+
     File    read1_trim=trim.read1_trim
     File    read2_trim=trim.read2_trim
     File    fastqc_html_r1=fastqc_trim_r1.fastqc_html
     File    fastqc_html_r2=fastqc_trim_r2.fastqc_html
+    String  total_sequences_trimmed_r1=fastqc_trim_r1.total_sequences
+    String  total_sequences_trimmed_r2=fastqc_trim_r2.total_sequences
     #File    sam_file=bowtie2_se.samfile
     File    bamfile=sam_to_bam.bamfile
     File    sorted_bam=sam_to_bam.sorted_bam
