@@ -13,7 +13,6 @@ workflow mm_trim_and_assemble {
     File      read2
     File      reference_seq
     String?     kraken2_db = "/kraken2-db"
-    Int?        kraken2_cpus=4
     String      virus_name="Mumps"
   }
 
