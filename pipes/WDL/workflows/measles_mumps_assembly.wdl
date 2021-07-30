@@ -36,7 +36,6 @@ workflow mm_trim_and_assemble {
       read1=read1,
       read2=read2,
       kraken2_db=kraken2_db,
-      cpus=kraken2_cpus,
       virus_name=virus_name
   }
 
