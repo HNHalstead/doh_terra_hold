@@ -58,8 +58,8 @@ workflow mm_trim_and_assemble {
   output {
     File    read1_trim=trim.read1_trim
     File    read2_trim=trim.read2_trim
-    File    fastqc_html_r1=fastqc.fastqc_html_r1
-    File    fastqc_html_r2=fastqc.fastqc_html_r2
+    File    fastqc_html_r1=fastqc_trim.fastqc_html_r1
+    File    fastqc_html_r2=fastqc_trim.fastqc_html_r2
     #File    sam_file=bowtie2_se.samfile
     File    bamfile=sam_to_bam.bamfile
     File    sorted_bam=sam_to_bam.sorted_bam
