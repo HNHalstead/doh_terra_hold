@@ -6,6 +6,7 @@ task fastqc_pe {
     File      read1
     File      read2
     Int?      cpus = 2
+    Int?      mem_gb = 8
   }
 
   command {
@@ -28,7 +29,7 @@ task fastqc_pe {
 
   runtime {
     docker:       "staphb/fastqc:0.11.8"
-    memory:       "8 GB"
+    memory:       mem_gb + "GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
     preemptible:  1
@@ -41,6 +42,7 @@ task fastqc_se {
     String    sra_id
     File      read
     Int?      cpus = 2
+    Int?      mem_gb = 16
   }
 
   command {
@@ -48,8 +50,6 @@ task fastqc_se {
     fastqc ${read} -o $PWD --threads ${cpus}
     date | tee DATE
     fastqc --version | hgrep FastQC | tee VERSION
-    ls
-    ls>ls.txt
   }
 
   output {
@@ -61,7 +61,7 @@ task fastqc_se {
 
   runtime {
     docker:       "staphb/fastqc:0.11.8"
-    memory:       "16 GB"
+    memory:       mem_gb + "GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
     preemptible:  1
