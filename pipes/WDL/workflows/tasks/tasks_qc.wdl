@@ -10,7 +10,7 @@ task fastqc {
 
   command {
     set -euo pipefail
-    fastqc ${read1_trim} -o $PWD --threads ${cpus}/fastqc ${read2_trim} -o $PWD --threads ${cpus}
+    fastqc ${read1} -o $PWD --threads ${cpus}/fastqc ${read2} -o $PWD --threads ${cpus}
     date | tee DATE
     fastqc --version | hgrep FastQC | tee VERSION
     ls
