@@ -1,6 +1,6 @@
 version 1.0
 
-task fastqc {
+task fastqc_pe {
   input {
     String    sra_id
     File      read1
@@ -32,6 +32,40 @@ task fastqc {
     cpu:          4
     disks:        "local-disk 100 SSD"
     preemptible:  1
+    continueOnReturnCode: "True"
+  }
+}
+
+task fastqc_se {
+  input {
+    String    sra_id
+    File      read
+    Int?      cpus = 2
+  }
+
+  command {
+    set -euo pipefail
+    fastqc ${read} -o $PWD --threads ${cpus}
+    date | tee DATE
+    fastqc --version | hgrep FastQC | tee VERSION
+    ls
+    ls>ls.txt
+  }
+
+  output {
+    File  fastqc_html=glob("*fastqc.html")[0]
+    File	fastqc_zip=glob("*fastqc.zip")[0]
+    String	date=read_string("DATE")
+    String	version=read_string("VERSION")
+  }
+
+  runtime {
+    docker:       "staphb/fastqc:0.11.8"
+    memory:       "8 GB"
+    cpu:          4
+    disks:        "local-disk 100 SSD"
+    preemptible:  1
+    continueOnReturnCode: "True"
   }
 }
 

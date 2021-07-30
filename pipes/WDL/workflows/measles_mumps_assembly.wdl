@@ -12,7 +12,6 @@ workflow mm_trim_and_assemble {
     File      read1
     File      read2
     File      reference_seq
-    String?     kraken2_db = "/kraken2-db"
     String      virus_name="Mumps"
   }
 
@@ -23,11 +22,16 @@ workflow mm_trim_and_assemble {
       read2=read2
   }
 
-  call mm_qc.fastqc as fastqc_trim {
+  call mm_qc.fastqc_se as fastqc_trim_r1 {
     input:
       sra_id=sra_id,
-      read1=trim.read1_trim,
-      read2=trim.read2_trim
+      read=trim.read1_trim
+  }
+
+  call mm_qc.fastqc_se as fastqc_trim_r2 {
+    input:
+      sra_id=sra_id,
+      read=trim.read2_trim
   }
 
   call mm_qc.kraken2 {
@@ -35,7 +39,6 @@ workflow mm_trim_and_assemble {
       sra_id=sra_id,
       read1=read1,
       read2=read2,
-      kraken2_db=kraken2_db,
       virus_name=virus_name
   }
 
@@ -56,8 +59,8 @@ workflow mm_trim_and_assemble {
   output {
     File    read1_trim=trim.read1_trim
     File    read2_trim=trim.read2_trim
-    File    fastqc_html_r1=fastqc_trim.fastqc_html_r1
-    File    fastqc_html_r2=fastqc_trim.fastqc_html_r2
+    File    fastqc_html_r1=fastqc_trim_r1.fastqc_html
+    File    fastqc_html_r2=fastqc_trim_r2.fastqc_html
     #File    sam_file=bowtie2_se.samfile
     File    bamfile=sam_to_bam.bamfile
     File    sorted_bam=sam_to_bam.sorted_bam
