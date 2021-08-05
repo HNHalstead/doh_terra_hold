@@ -59,7 +59,7 @@ task fastqc_se {
     echo "first grep"
     ls
     ls>ls2.txt
-    unzip -p ${tripped}_fastqc.zip */fastqc_data.txt | grep "%GC" | cut -f 2 | tee PERCENT_GC
+    unzip -p ${stripped}_fastqc.zip */fastqc_data.txt | grep "%GC" | cut -f 2 | tee PERCENT_GC
     PERCENT_GC=
     ls
     ls>ls3.txt
