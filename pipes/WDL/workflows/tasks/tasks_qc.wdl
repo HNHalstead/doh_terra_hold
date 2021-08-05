@@ -49,7 +49,7 @@ task fastqc_se {
     set -euo pipefail
     fastqc ${read} -o $PWD --threads ${cpus}
     date | tee DATE
-    fastqc --version | hgrep FastQC | tee VERSION
+    fastqc --version | tr -d 'FastQC' | tee VERSION
 
     echo "fastqc done"
     unzip -p ${sra_id}_trimmed_fastqc.zip */fastqc_data.txt | grep "Total Sequences" | cut -f 2 | tee READ_SEQS
