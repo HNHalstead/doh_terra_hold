@@ -54,6 +54,7 @@ task fastqc_se {
     echo "fastqc done"
     unzip -p ${sra_id}_trimmed_fastqc.zip */fastqc_data.txt | grep "Total Sequences" | cut -f 2 | tee READ_SEQS
     echo "first grep"
+    grep "%GC" */fastqc_data.txt
     grep "%GC" */fastqc_data.txt | cut -f 2 | tee PERCENT_GC
   }
 
