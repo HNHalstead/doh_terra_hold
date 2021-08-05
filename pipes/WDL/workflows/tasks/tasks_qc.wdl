@@ -52,6 +52,8 @@ task fastqc_se {
     fastqc --version | tr -d 'FastQC' | tee VERSION
 
     echo "fastqc done"
+    ls
+    ls>ls.txt
     unzip -p ${sra_id}_trimmed_fastqc.zip */fastqc_data.txt | grep "Total Sequences" | cut -f 2 | tee READ_SEQS
     echo "first grep"
     grep "%GC" */fastqc_data.txt
