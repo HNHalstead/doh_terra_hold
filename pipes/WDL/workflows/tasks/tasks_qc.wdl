@@ -43,6 +43,7 @@ task fastqc_se {
     File      read
     Int?      cpus = 2
     Int?      mem_gb = 16
+    String stripped = basename(read, ".fastq.gz")
   }
 
   command {
@@ -54,12 +55,12 @@ task fastqc_se {
     echo "fastqc done"
     ls
     ls>ls.txt
-    unzip -p ${sra_id}_trimmed_fastqc.zip */fastqc_data.txt | grep "Total Sequences" | cut -f 2 | tee READ_SEQS
+    unzip -p ${stripped}_fastqc.zip */fastqc_data.txt | grep "Total Sequences" | cut -f 2 | tee READ_SEQS
     echo "first grep"
     ls
     ls>ls2.txt
-    unzip -p ${sra_id}_trimmed_fastqc.zip */fastqc_data.txt | grep "%GC"
-    unzip -p ${sra_id}_trimmed_fastqc.zip */fastqc_data.txt | grep "%GC" | cut -f 2 | tee PERCENT_GC
+    unzip -p ${tripped}_fastqc.zip */fastqc_data.txt | grep "%GC" | cut -f 2 | tee PERCENT_GC
+    PERCENT_GC=
     ls
     ls>ls3.txt
   }
@@ -78,7 +79,7 @@ task fastqc_se {
     memory:       mem_gb + "GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
-    preemptible:  1
+    preemptible:  0
     continueOnReturnCode: "True"
   }
 }
