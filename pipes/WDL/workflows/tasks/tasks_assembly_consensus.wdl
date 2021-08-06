@@ -87,6 +87,9 @@ task consensus {
 
     samtools mpileup -d ${max_depth} -Q ${min_bq} --reference ${reference_seq} ${sorted_bam} | ivar consensus -p ${sra_id}.consensus -q ${min_qual} -t ${min_freq} -m ${min_depth} -n N
 
+    ls
+    ls>ls.txt
+
     variants_num=$(grep "TRUE" ${sra_id}.variants.tsv | wc -l)
     if [ -z "$variants_num" ] ; then variants_num="0" ; fi
     echo $variants_num | tee VARIANT_NUM
