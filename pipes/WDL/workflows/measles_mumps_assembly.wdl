@@ -94,8 +94,15 @@ workflow mm_trim_and_assemble {
     File    kraken2_report=kraken2.kraken_report
     Float   percent_human=kraken2.percent_human
 
-    File    sample_variants =consensus.sample_variants
-    String  variant_num=consensus.variant_num
+    Int     consensus_number_N=consensus.number_N
+    Int     consensus_number_ATCG=consensus.number_ATCG
+    Int     consensus_number_Degenerate=consensus.number_Degenerate
+    Int     consensus_number_total=consensus.number_Total
+    File    consensus_seq=consensus.consensus_seq
+    File    consensus_qual_File=consensus.consensus_qual
+
+    #File    sample_variants =consensus.sample_variants
+    #String  variant_num=consensus.variant_num
 
   }
 }
