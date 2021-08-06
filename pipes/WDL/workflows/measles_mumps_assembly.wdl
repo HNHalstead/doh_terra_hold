@@ -67,12 +67,18 @@ workflow mm_trim_and_assemble {
       samfile=bowtie2_se.samfile
   }
 
+  call mm_assembly_consensus.consensus {
+    input:
+      sra_id=sra_id,
+      sorted_bam=sam_to_bam.sorted_bam
+      reference_seq=reference_seq
+  }
+
   output {
     File    r1_fastqc_html_raw=fastqc_raw_r1.fastqc_html
     File    r2_fastqc_html_raw=fastqc_raw_r2.fastqc_html
     String  r1_total_sequences_raw=fastqc_raw_r1.total_sequences
     String  r2_total_sequences_raw=fastqc_raw_r2.total_sequences
-
     File    read1_trim=trim.read1_trim
     File    read2_trim=trim.read2_trim
     File    r1_fastqc_html_trimmed=fastqc_trim_r1.fastqc_html
@@ -87,6 +93,9 @@ workflow mm_trim_and_assemble {
     File    indexed_bam=sam_to_bam.indexed_bam
     File    kraken2_report=kraken2.kraken_report
     Float   percent_human=kraken2.percent_human
+
+    File    sample_variants =consensus.sample_variants
+    String  variant_num=consensus.variant_num
 
   }
 }
