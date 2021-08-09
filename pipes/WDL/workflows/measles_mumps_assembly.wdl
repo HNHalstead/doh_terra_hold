@@ -101,6 +101,15 @@ workflow mm_trim_and_assemble {
     File    consensus_seq=consensus.consensus_seq
     File    consensus_qual_File=consensus.consensus_qual
 
+    File       assembly_stats=stats_n_coverage.stats
+    File       assembly_cov_hist=stats_n_coverage.assembly_cov_hist
+    File       assembly_cov_stats=stats_n_coverage.assembly_cov_stats
+    File       assembly_flagstat =stats_n_coverage.flagstat
+    Float      assembly_coverage =stats_n_coverage.coverage
+    Float      assembly_depth =stats_n_coverage.depth
+    Float      assembly_meanbaseq =stats_n_coverage.meanbaseq
+    Float      assemlbymeanmapq=assembly_meanmapq
+
     #File    sample_variants =consensus.sample_variants
     #String  variant_num=consensus.variant_num
 
