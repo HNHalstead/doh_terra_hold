@@ -67,6 +67,12 @@ workflow mm_trim_and_assemble {
       samfile=bowtie2_se.samfile
   }
 
+  call mm_qc.stats_n_coverage {
+    input:
+      sra_id=sra_id,
+      samfile=bowtie2_se.bamfile
+  }
+
   call mm_assembly_consensus.consensus {
     input:
       sra_id=sra_id,
