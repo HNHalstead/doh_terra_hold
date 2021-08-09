@@ -70,7 +70,7 @@ workflow mm_trim_and_assemble {
   call mm_qc.stats_n_coverage {
     input:
       sra_id=sra_id,
-      samfile=sam_to_bam.bamfile
+      bamfile=sam_to_bam.bamfile
   }
 
   call mm_assembly_consensus.consensus {
