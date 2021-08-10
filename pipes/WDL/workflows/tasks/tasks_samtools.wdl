@@ -8,6 +8,10 @@ task sam_to_bam {
   }
 
   command {
+    date | tee DATE
+    samtools --version | head -n1 | tee VERSION
+
+
     samtools view -S -b ${samfile}>${sra_id}.bam
     samtools sort ${sra_id}.bam -o ${sra_id}.sorted.bam
     samtools index ${sra_id}.sorted.bam
@@ -17,6 +21,8 @@ task sam_to_bam {
     File    bamfile="${sra_id}.bam"
     File	sorted_bam="${sra_id}.sorted.bam"
     File	indexed_bam="${sra_id}.sorted.bam.bai"
+    String     date          = read_string("DATE")
+    String     version       = read_string("VERSION")
   }
 
   runtime {
