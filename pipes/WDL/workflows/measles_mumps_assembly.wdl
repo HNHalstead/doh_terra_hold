@@ -70,7 +70,7 @@ workflow mm_trim_and_assemble {
   call mm_qc.stats_n_coverage {
     input:
       sra_id=sra_id,
-      bamfile=sam_to_bam.bamfile
+      bamfile=sam_to_bam.sorted_bam
   }
 
   call mm_assembly_consensus.consensus {
@@ -114,7 +114,7 @@ workflow mm_trim_and_assemble {
     Float      assembly_coverage=stats_n_coverage.coverage
     Float      assembly_depth=stats_n_coverage.depth
     Float      assembly_meanbaseq=stats_n_coverage.meanbaseq
-    Float      assemlbymeanmapq=stats_n_coverage.meanmapq
+    Float      assembly_meanmapq=stats_n_coverage.meanmapq
 
     #File    sample_variants =consensus.sample_variants
     #String  variant_num=consensus.variant_num
