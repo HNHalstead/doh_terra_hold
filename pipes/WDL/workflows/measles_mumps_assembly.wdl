@@ -64,13 +64,13 @@ workflow mm_trim_and_assemble {
   call mm_qc.stats_n_coverage {
     input:
       sra_id=sra_id,
-      bamfile=sam_to_bam.sorted_bam
+      bamfile=bowtie2_se_to_bam.sorted_bam
   }
 
   call mm_assembly_consensus.consensus {
     input:
       sra_id=sra_id,
-      sorted_bam=sam_to_bam.sorted_bam,
+      sorted_bam=bowtie2_se_to_bam.sorted_bam,
       reference_seq=reference_seq
   }
 
