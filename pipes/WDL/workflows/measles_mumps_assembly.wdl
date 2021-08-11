@@ -53,18 +53,12 @@ workflow mm_trim_and_assemble {
       virus_name=virus_name
   }
 
-  call mm_assembly_consensus.bowtie2_se {
+  call mm_assembly_consensus.bowtie2_se_to_bam {
     input:
       sra_id=sra_id,
       read1_trim=trim.read1_trim,
       read2_trim=trim.read2_trim,
       reference_seq=reference_seq
-  }
-
-  call mm_assembly_consensus.sam_to_bam {
-    input:
-      sra_id=sra_id,
-      samfile=bowtie2_se.samfile
   }
 
   call mm_qc.stats_n_coverage {
@@ -94,9 +88,9 @@ workflow mm_trim_and_assemble {
     String  r1_percent_gc_trimmed=fastqc_trim_r1.percent_gc
     String  r2_percent_gc_trimmed=fastqc_trim_r2.percent_gc
     #File    sam_file=bowtie2_se.samfile
-    File    bamfile=sam_to_bam.bamfile
-    File    sorted_bam=sam_to_bam.sorted_bam
-    File    indexed_bam=sam_to_bam.indexed_bam
+    File    bamfile=bowtie2_se_to_bam.bamfile
+    File    sorted_bam=bowtie2_se_to_bam.sorted_bam
+    File    indexed_bam=bowtie2_se_to_bam.indexed_bam
     File    kraken2_report=kraken2.kraken_report
     Float   percent_human=kraken2.percent_human
 

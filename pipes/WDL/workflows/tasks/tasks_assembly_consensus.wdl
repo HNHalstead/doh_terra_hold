@@ -31,6 +31,46 @@ task bowtie2_se {
   }
 }
 
+task bowtie2_se_to_bam {
+  input {
+    String  sra_id
+    File    read1_trim
+    File    read2_trim
+    File    reference_seq
+  }
+
+  command {
+    date | tee BOWTIE2DATE
+    bowtie2 --version | head -n1 | tee BOWTIE2VERSION
+
+    date | tee SAMTOOLSDATE
+    samtools --version | head -n1 | tee SAMTOOLSVERSION
+
+    bowtie2-build ${reference_seq} mumps_ref
+    bowtie2 -x mumps_ref -U ${read1_trim},${read2_trim} --local | samtools view -S -b >${sra_id}.bam
+    samtools sort ${sra_id}.bam -o ${sra_id}.sorted.bam
+    samtools index ${sra_id}.sorted.bam
+  }
+
+  output {
+    File    bamfile="${sra_id}.bam"
+    File	sorted_bam="${sra_id}.sorted.bam"
+    File	indexed_bam="${sra_id}.sorted.bam.bai"
+    String     assembly_bowtie2_date=read_string("BOWTIE2DATE")
+    String     assembly_bowtie2_version=read_string("BOWTIE2VERSION")
+    String     assembly_samtools_date=read_string("SAMTOOLSDATE")
+    String     assembly_samtools_version=read_string("SAMTOOLSVERSION")
+  }
+
+  runtime {
+    docker:       "hnhalstead/bowtie2:0.1.0"
+    memory:       "8 GB"
+    cpu:          4
+    disks:        "local-disk 100 SSD"
+    preemptible:  1
+  }
+}
+
 task sam_to_bam {
 
   input {
