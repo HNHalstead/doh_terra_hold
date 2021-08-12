@@ -63,7 +63,7 @@ task bowtie2_se_to_bam {
   }
 
   runtime {
-    docker:       "hnhalstead/bowtie2:0.1.0"
+    docker:       "hnh0303/bowtie2:0.1.0"
     memory:       "8 GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
