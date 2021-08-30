@@ -159,7 +159,7 @@ task consensus {
     Int       number_Total = read_string("NUM_TOTAL")
     #File      sample_variants = "${sra_id}.variants.tsv"
     File      consensus_seq = "${sra_id}_consensus.fa"
-    File      consensus_qual = "${sra_id}.consensus.qual.txt"
+    File      consensus_qual = "${sra_id}_consensus.qual.txt"
     String     date = read_string("DATE")
     String     samtools_version = read_string("VERSION")
     String     ivar_version = read_string("IVAR_VERSION")
