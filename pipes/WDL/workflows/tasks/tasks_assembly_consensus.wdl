@@ -125,7 +125,7 @@ task consensus {
     samtools --version | head -n1 | tee VERSION
     ivar version | head -n1 | tee IVAR_VERSION
 
-    samtools mpileup -d ${max_depth} -Q ${min_bq} --reference ${reference_seq} ${sorted_bam} | ivar consensus -p ${sra_id}.consensus -q ${min_qual} -t ${min_freq} -m ${min_depth} -n N
+    samtools mpileup -d ${max_depth} -Q ${min_bq} --reference ${reference_seq} ${sorted_bam} | ivar consensus -p ${sra_id}_consensus -q ${min_qual} -t ${min_freq} -m ${min_depth} -n N
 
     ls
     ls>ls.txt
@@ -158,7 +158,7 @@ task consensus {
     Int       number_Degenerate = read_string("NUM_DEGENERATE")
     Int       number_Total = read_string("NUM_TOTAL")
     #File      sample_variants = "${sra_id}.variants.tsv"
-    File      consensus_seq = "${sra_id}.consensus.fa"
+    File      consensus_seq = "${sra_id}_consensus.fa"
     File      consensus_qual = "${sra_id}.consensus.qual.txt"
     String     date = read_string("DATE")
     String     samtools_version = read_string("VERSION")
