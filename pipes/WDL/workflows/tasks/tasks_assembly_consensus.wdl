@@ -84,7 +84,7 @@ task bowtie2_se_to_bam {
   }
 
   runtime {
-    docker:       ${docker_image}
+    docker:       "${docker_image}""
     memory:       "8 GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
