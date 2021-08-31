@@ -14,10 +14,13 @@ task bowtie2_se {
 
     bowtie2-build ${reference_seq} mumps_ref
     bowtie2 -x mumps_ref -U ${read1_trim},${read2_trim} -S ${sra_id}.sam --local
+
+    dpkg -l>software.txt
   }
 
   output {
     File    samfile="${sra_id}.sam"
+    File    image_software="software.txt"
     String     date          = read_string("DATE")
     String     version       = read_string("VERSION")
   }
@@ -50,12 +53,15 @@ task bowtie2_se_to_bam {
     bowtie2 -x mumps_ref -U ${read1_trim},${read2_trim} --local | samtools view -S -b >${sra_id}.bam
     samtools sort ${sra_id}.bam -o ${sra_id}.sorted.bam
     samtools index ${sra_id}.sorted.bam
+
+    dpkg -l>software.txt
   }
 
   output {
     File    bamfile="${sra_id}.bam"
     File	sorted_bam="${sra_id}.sorted.bam"
     File	indexed_bam="${sra_id}.sorted.bam.bai"
+    File    image_software="software.txt"
     String     assembly_bowtie2_date=read_string("BOWTIE2DATE")
     String     assembly_bowtie2_version=read_string("BOWTIE2VERSION")
     String     assembly_samtools_date=read_string("SAMTOOLSDATE")

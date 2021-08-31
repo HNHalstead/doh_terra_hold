@@ -91,6 +91,7 @@ workflow mm_trim_and_assemble {
     File    bamfile=bowtie2_se_to_bam.bamfile
     File    sorted_bam=bowtie2_se_to_bam.sorted_bam
     File    indexed_bam=bowtie2_se_to_bam.indexed_bam
+    File    bowtie2_image_installations=bowtie2_se_to_bam.image_software
     File    kraken2_report=kraken2.kraken_report
     Float   percent_human=kraken2.percent_human
 
