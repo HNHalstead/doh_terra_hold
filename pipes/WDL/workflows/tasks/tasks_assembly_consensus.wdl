@@ -58,6 +58,12 @@ task bowtie2_se_to_bam {
     samtools sort ${sra_id}.bam -o ${sra_id}.sorted.bam
     samtools index ${sra_id}.sorted.bam
 
+    cat BOWTIE2DATE
+    echo "Docker image\t${bowtie2_docker} (see <url_placeholder>)"
+    printf %"$COLUMNS"s |tr " " "-"
+    echo "bowtie2\t$bowtie2_v\t\tsequence alignment and sequence analysis"
+    echo "samtools\t$bowtie2_v\t\tsequence alignment and sequence analysis"
+
     cat BOWTIE2DATE>software.txt
     echo "Docker image\t${bowtie2_docker} (see <url_placeholder>)">>software.txt
     printf %"$COLUMNS"s |tr " " "-">>software.txt
@@ -78,7 +84,7 @@ task bowtie2_se_to_bam {
   }
 
   runtime {
-    docker:       ${bowtie2_docker_image}
+    docker:       ${docker_image}
     memory:       "8 GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
