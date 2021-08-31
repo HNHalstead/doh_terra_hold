@@ -65,7 +65,7 @@ task bowtie2_se_to_bam {
     echo "samtools\t$bowtie2_v\t\tsequence alignment and sequence analysis"
 
     cat BOWTIE2DATE>software.txt
-    echo "Docker image\t${bowtie2_docker} (see <url_placeholder>)">>software.txt
+    echo "Docker image\t${docker_image} (see <url_placeholder>)">>software.txt
     printf %"$COLUMNS"s |tr " " "-">>software.txt
     dpkg -l>>software.txt
     echo "bowtie2\t$bowtie2_v\t\tsequence alignment and sequence analysis">>software.txt
