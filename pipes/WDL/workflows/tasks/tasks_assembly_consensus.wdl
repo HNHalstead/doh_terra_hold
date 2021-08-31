@@ -59,7 +59,7 @@ task bowtie2_se_to_bam {
     samtools index ${sra_id}.sorted.bam
 
     cat BOWTIE2DATE
-    echo "Docker image\t${bowtie2_docker} (see <url_placeholder>)"
+    echo "Docker image\t${docker_image} (see <url_placeholder>)"
     printf %"$COLUMNS"s |tr " " "-"
     echo "bowtie2\t$bowtie2_v\t\tsequence alignment and sequence analysis"
     echo "samtools\t$bowtie2_v\t\tsequence alignment and sequence analysis"
