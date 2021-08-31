@@ -40,21 +40,30 @@ task bowtie2_se_to_bam {
     File    read1_trim
     File    read2_trim
     File    reference_seq
+    String  docker_image="hnh0303/bowtie2:0.1.0"
+    String  alias_name="bowtie2_se_bam"
   }
 
   command {
     date | tee BOWTIE2DATE
     bowtie2 --version | head -n1 | tee BOWTIE2VERSION
+    bowtie2_v=$(cat BOWTIE2VERSION)
 
     date | tee SAMTOOLSDATE
     samtools --version | head -n1 | tee SAMTOOLSVERSION
+    samtools_v=$(cat SAMTOOLSVERSION)
 
     bowtie2-build ${reference_seq} mumps_ref
     bowtie2 -x mumps_ref -U ${read1_trim},${read2_trim} --local | samtools view -S -b >${sra_id}.bam
     samtools sort ${sra_id}.bam -o ${sra_id}.sorted.bam
     samtools index ${sra_id}.sorted.bam
 
-    dpkg -l>software.txt
+    cat BOWTIE2DATE>software.txt
+    echo "Docker image\t${bowtie2_docker} (see <url_placeholder>)">>software.txt
+    printf %"$COLUMNS"s |tr " " "-">>software.txt
+    dpkg -l>>software.txt
+    echo "bowtie2\t$bowtie2_v\t\tsequence alignment and sequence analysis">>software.txt
+    echo "samtools\t$bowtie2_v\t\tsequence alignment and sequence analysis">>software.txt
   }
 
   output {
@@ -69,7 +78,7 @@ task bowtie2_se_to_bam {
   }
 
   runtime {
-    docker:       "hnh0303/bowtie2:0.1.0"
+    docker:       ${bowtie2_docker_image}
     memory:       "8 GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
