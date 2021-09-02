@@ -58,18 +58,15 @@ task bowtie2_se_to_bam {
     samtools sort ${sra_id}.bam -o ${sra_id}.sorted.bam
     samtools index ${sra_id}.sorted.bam
 
-    cat BOWTIE2DATE
-    echo "Docker image\t${docker_image} (see <url_placeholder>)"
-    printf %"$COLUMNS"s |tr " " "-"
-    echo "bowtie2\t$bowtie2_v\t\tsequence alignment and sequence analysis"
-    echo "samtools\t$bowtie2_v\t\tsequence alignment and sequence analysis"
-
     cat BOWTIE2DATE>software.txt
-    echo "Docker image\t${docker_image} (see <url_placeholder>)">>software.txt
+    echo -e "docker image\t${docker_image} (see <url_placeholder>)">>software.txt
+    echo -e "licenses available at:"
+    echo -e "\thttps://github.com/BenLangmead/bowtie2/blob/master/LICENSE"
+    echo -e "\thttps://github.com/samtools/samtools/blob/develop/LICENSE"
     printf %"$COLUMNS"s |tr " " "-">>software.txt
     dpkg -l>>software.txt
-    echo "bowtie2\t$bowtie2_v\t\tsequence alignment and sequence analysis">>software.txt
-    echo "samtools\t$bowtie2_v\t\tsequence alignment and sequence analysis">>software.txt
+    echo -e "bowtie2\t$bowtie2_v\t\tsequence alignment and sequence analysis">>software.txt
+    echo -e "samtools\t$bowtie2_v\t\tsequence alignment and sequence analysis">>software.txt
   }
 
   output {
