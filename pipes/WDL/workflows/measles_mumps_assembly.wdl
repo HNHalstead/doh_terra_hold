@@ -91,7 +91,7 @@ workflow mm_trim_and_assemble {
     File    bamfile=bowtie2_se_to_bam.bamfile
     File    sorted_bam=bowtie2_se_to_bam.sorted_bam
     File    indexed_bam=bowtie2_se_to_bam.indexed_bam
-    File    bowtie2_image_installations=bowtie2_se_to_bam.image_software
+    File    se_to_bam_docker_installations=bowtie2_se_to_bam.image_software
     File    kraken2_report=kraken2.kraken_report
     Float   percent_human=kraken2.percent_human
 
@@ -101,6 +101,7 @@ workflow mm_trim_and_assemble {
     Int     consensus_number_total=consensus.number_Total
     File    consensus_seq=consensus.consensus_seq
     File    consensus_qual_File=consensus.consensus_qual
+    File    consensus_docker_installations=consensus.image_software
 
     File       assembly_stats=stats_n_coverage.stats
     File       assembly_cov_hist=stats_n_coverage.assembly_cov_hist

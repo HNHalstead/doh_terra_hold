@@ -42,6 +42,8 @@ task bowtie2_se_to_bam {
     File    reference_seq
     String  docker_image="hnh0303/bowtie2:0.1.0"
     String  alias_name="bowtie2_se_bam"
+    Int     cpus=4
+    String  memory="8 GB"
   }
 
   command {
@@ -59,14 +61,14 @@ task bowtie2_se_to_bam {
     samtools index ${sra_id}.sorted.bam
 
     cat BOWTIE2DATE>software.txt
-    echo -e "docker image\t${docker_image} (see <url_placeholder>)">>software.txt
+    echo -e "docker image\t${docker_image}">>software.txt
     echo -e "licenses available at:"
     echo -e "\thttps://github.com/BenLangmead/bowtie2/blob/master/LICENSE"
     echo -e "\thttps://github.com/samtools/samtools/blob/develop/LICENSE"
     printf %"$COLUMNS"s |tr " " "-">>software.txt
     dpkg -l>>software.txt
     echo -e "bowtie2\t$bowtie2_v\t\tsequence alignment and sequence analysis">>software.txt
-    echo -e "samtools\t$bowtie2_v\t\tsequence alignment and sequence analysis">>software.txt
+    echo -e "samtools\t$samtools_v\t\tset of utilities for interacting with and post-processing short DNA sequence read alignments">>software.txt
   }
 
   output {
@@ -82,8 +84,8 @@ task bowtie2_se_to_bam {
 
   runtime {
     docker:       "${docker_image}"
-    memory:       "8 GB"
-    cpu:          4
+    memory:       "${memory}"
+    cpu:          ${cpus}
     disks:        "local-disk 100 SSD"
     preemptible:  1
   }
@@ -94,16 +96,28 @@ task sam_to_bam {
   input {
     String    sra_id
     File      samfile
+    String    docker_image="staphb/samtools:1.12"
+    String    memory="8 GB"
+    Int       cpus=4
   }
 
   command {
     date | tee DATE
     samtools --version | head -n1 | tee VERSION
+    samtools_v=$(cat VERSION)
 
 
     samtools view -S -b ${samfile}>${sra_id}.bam
     samtools sort ${sra_id}.bam -o ${sra_id}.sorted.bam
     samtools index ${sra_id}.sorted.bam
+
+    cat DATE>software.txt
+    echo -e "docker image\t${docker_image}">>software.txt
+    echo -e "licenses available at:"
+    echo -e "\thttps://github.com/samtools/samtools/blob/develop/LICENSE"
+    printf %"$COLUMNS"s |tr " " "-">>software.txt
+    dpkg -l>>software.txt
+    echo -e "samtools\t$samtools_v\t\tset of utilities for interacting with and post-processing short DNA sequence read alignments">>software.txt
   }
 
   output {
@@ -112,12 +126,13 @@ task sam_to_bam {
     File	indexed_bam="${sra_id}.sorted.bam.bai"
     String     date          = read_string("DATE")
     String     version       = read_string("VERSION")
+    File    image_software="software.txt"
   }
 
   runtime {
-    docker:       "staphb/samtools:1.12"
-    memory:       "8 GB"
-    cpu:          4
+    docker:       "${docker_image}"
+    memory:       "${memory}"
+    cpu:          ${cpus}
     disks:        "local-disk 100 SSD"
     preemptible:  1
   }
@@ -135,13 +150,19 @@ task consensus {
     Int         min_qual = "20"
     Float       min_freq = "0.6"
     Int         min_depth = "10"
+    String  docker_image="staphb/ivar:1.3"
+    String  alias_name="bowtie2_se_bam"
+    Int     cpus=4
+    String  memory="8 GB"
   }
 
 
   command {
     date | tee DATE
     samtools --version | head -n1 | tee VERSION
+    samtools_v=$(cat VERSION)
     ivar version | head -n1 | tee IVAR_VERSION
+    ivar_v=$(cat IVAR_VERSION)
 
     samtools mpileup -d ${max_depth} -Q ${min_bq} --reference ${reference_seq} ${sorted_bam} | ivar consensus -p ${sra_id}_consensus -q ${min_qual} -t ${min_freq} -m ${min_depth} -n N
 
@@ -164,6 +185,16 @@ task consensus {
    if [ -z "$num_total" ] ; then num_total="0" ; fi
    echo $num_total | tee NUM_TOTAL
 
+   cat DATE>software.txt
+   echo -e "docker image\t${docker_image}">>software.txt
+   echo -e "licenses available at:"
+   echo -e "\thttps://github.com/andersen-lab/ivar/blob/master/LICENSE"
+   echo -e "\thttps://github.com/samtools/samtools/blob/develop/LICENSE"
+   printf %"$COLUMNS"s |tr " " "-">>software.txt
+   dpkg -l>>software.txt
+   echo -e "ivar\t$ivar_v\t\tpackage that contains functions broadly useful for viral amplicon-based sequencing">>software.txt
+   echo -e "samtools\t$samtools_v\t\tset of utilities for interacting with and post-processing short DNA sequence read alignments">>software.txt
+
     #variants_num=$(grep "TRUE" ${sra_id}.variants.tsv | wc -l)
     #if [ -z "$variants_num" ] ; then variants_num="0" ; fi
     #echo $variants_num | tee VARIANT_NUM
@@ -181,13 +212,14 @@ task consensus {
     String     date = read_string("DATE")
     String     samtools_version = read_string("VERSION")
     String     ivar_version = read_string("IVAR_VERSION")
+    File       image_software="software.txt"
     #String     variant_num       = read_string("VARIANT_NUM")
   }
 
   runtime {
-    docker:       "staphb/ivar:1.3"
-    memory:       "8 GB"
-    cpu:          4
+    docker:       "${docker_image}"
+    memory:       "${memory}"
+    cpu:          ${cpus}
     disks:        "local-disk 100 SSD"
     preemptible:  1
   }
