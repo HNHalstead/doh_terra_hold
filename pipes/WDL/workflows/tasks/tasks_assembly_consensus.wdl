@@ -85,7 +85,7 @@ task bowtie2_se_to_bam {
   runtime {
     docker:       "${docker_image}"
     memory:       "${memory}"
-    cpu:          ${cpus}
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  1
   }
@@ -132,7 +132,7 @@ task sam_to_bam {
   runtime {
     docker:       "${docker_image}"
     memory:       "${memory}"
-    cpu:          ${cpus}
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  1
   }
@@ -219,7 +219,7 @@ task consensus {
   runtime {
     docker:       "${docker_image}"
     memory:       "${memory}"
-    cpu:          ${cpus}
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  1
   }
