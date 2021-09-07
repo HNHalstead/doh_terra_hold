@@ -41,9 +41,10 @@ task fastqc_se {
   input {
     String    sra_id
     File      read
-    Int?      cpus = 2
-    Int?      mem_gb = 16
+    Int?      cpus = 4
+    Int?      memory = "16 GB"
     String stripped = basename(read, ".fastq.gz")
+    String  docker_image="staphb/fastqc:0.11.8"
   }
 
   command {
@@ -51,18 +52,20 @@ task fastqc_se {
     fastqc ${read} -o $PWD --threads ${cpus}
     date | tee DATE
     fastqc --version | tr -d 'FastQC' | tee VERSION
+    fastqc_v=$(cat VERSION)
 
-    echo "fastqc done"
-    ls
-    ls>ls.txt
     unzip -p ${stripped}_fastqc.zip */fastqc_data.txt | grep "Total Sequences" | cut -f 2 | tee READ_SEQS
-    echo "first grep"
-    ls
-    ls>ls2.txt
+
     unzip -p ${stripped}_fastqc.zip */fastqc_data.txt | grep "%GC" | cut -f 2 | tee PERCENT_GC
-    PERCENT_GC=
-    ls
-    ls>ls3.txt
+
+    cat DATE>software.txt
+    echo -e "docker image\t${docker_image}">>software.txt
+    echo -e "licenses available at:"
+    echo -e "\thttps://github.com/s-andrews/FastQC/blob/master/LICENSE"
+    printf %"$COLUMNS"s |tr " " "-">>software.txt
+    dpkg -l>>software.txt
+    echo -e "FastQC\t$fastqc_v\t\ta quality control tool for high throughput sequence data">>software.txt
+
   }
 
   output {
@@ -75,9 +78,9 @@ task fastqc_se {
   }
 
   runtime {
-    docker:       "staphb/fastqc:0.11.8"
-    memory:       mem_gb + "GB"
-    cpu:          4
+    docker:       "${docker_image}"
+    memory:       "${memory}"
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
     continueOnReturnCode: "True"

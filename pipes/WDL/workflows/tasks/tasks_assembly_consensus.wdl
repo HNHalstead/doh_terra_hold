@@ -166,9 +166,6 @@ task consensus {
 
     samtools mpileup -d ${max_depth} -Q ${min_bq} --reference ${reference_seq} ${sorted_bam} | ivar consensus -p ${sra_id}_consensus -q ${min_qual} -t ${min_freq} -m ${min_depth} -n N
 
-    ls
-    ls>ls.txt
-
    num_N=$( grep -v ">" ${sra_id}_consensus.fa | grep -o 'N' | wc -l )
    if [ -z "$num_N" ] ; then num_N="0" ; fi
    echo $num_N | tee NUM_N
