@@ -59,10 +59,10 @@ task fastqc_se {
     unzip -p ${stripped}_fastqc.zip */fastqc_data.txt | grep "%GC" | cut -f 2 | tee PERCENT_GC
 
     cat DATE>fastqc_se_software.txt
-    echo -e "docker image\t${docker_image}">>fastqc_se_software.txt
+    echo -e "docker image:\t${docker_image}">>fastqc_se_software.txt
     echo -e "licenses available at:">>fastqc_se_software.txt
     echo -e "\thttps://github.com/s-andrews/FastQC/blob/master/LICENSE">>fastqc_se_software.txt
-    printf %"$COLUMNS"s |tr " " "-">>fastqc_se_software.txt
+    printf '%100s\n' | tr ' ' ->>fastqc_se_software.txt
     dpkg -l>>fastqc_se_software.txt
     echo -e "FastQC\t$fastqc_v\t\ta quality control tool for high throughput sequence data">>fastqc_se_software.txt
 
