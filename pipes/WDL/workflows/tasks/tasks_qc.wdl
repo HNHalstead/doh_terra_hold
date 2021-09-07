@@ -60,6 +60,8 @@ task fastqc_se {
 
     cat DATE>fastqc_se_software.txt
     echo -e "docker image:\t${docker_image}">>fastqc_se_software.txt
+    echo -e "docker image platform:">>fastqc_se_software.txt
+    uname -a>>fastqc_se_software.txt
     echo -e "licenses available at:">>fastqc_se_software.txt
     echo -e "\thttps://github.com/s-andrews/FastQC/blob/master/LICENSE">>fastqc_se_software.txt
     printf '%100s\n' | tr ' ' ->>fastqc_se_software.txt
