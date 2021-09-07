@@ -42,7 +42,7 @@ task fastqc_se {
     String    sra_id
     File      read
     Int?      cpus = 4
-    Int?      memory = "16 GB"
+    String      memory = "16 GB"
     String stripped = basename(read, ".fastq.gz")
     String  docker_image="staphb/fastqc:0.11.8"
   }
@@ -71,6 +71,7 @@ task fastqc_se {
   output {
     File  fastqc_html=glob("*fastqc.html")[0]
     File	fastqc_zip=glob("*fastqc.zip")[0]
+    File	image_software="fastqc_se_software.txt"
     String	date=read_string("DATE")
     String	version=read_string("VERSION")
     String	total_sequences=read_string("READ_SEQS")

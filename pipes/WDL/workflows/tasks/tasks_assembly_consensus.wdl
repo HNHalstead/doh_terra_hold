@@ -75,7 +75,7 @@ task bowtie2_se_to_bam {
     File    bamfile="${sra_id}.bam"
     File	sorted_bam="${sra_id}.sorted.bam"
     File	indexed_bam="${sra_id}.sorted.bam.bai"
-    File    image_software="software.txt"
+    File    image_software="bowtie2_se_to_bam_software.txt"
     String     assembly_bowtie2_date=read_string("BOWTIE2DATE")
     String     assembly_bowtie2_version=read_string("BOWTIE2VERSION")
     String     assembly_samtools_date=read_string("SAMTOOLSDATE")
@@ -126,7 +126,7 @@ task sam_to_bam {
     File	indexed_bam="${sra_id}.sorted.bam.bai"
     String     date          = read_string("DATE")
     String     version       = read_string("VERSION")
-    File    image_software="software.txt"
+    File    image_software="sam_to_bam_software.txt"
   }
 
   runtime {
@@ -209,7 +209,7 @@ task consensus {
     String     date = read_string("DATE")
     String     samtools_version = read_string("VERSION")
     String     ivar_version = read_string("IVAR_VERSION")
-    File       image_software="software.txt"
+    File       image_software="consensus_software.txt"
     #String     variant_num       = read_string("VARIANT_NUM")
   }
 

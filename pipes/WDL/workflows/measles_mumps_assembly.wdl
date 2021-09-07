@@ -79,6 +79,9 @@ workflow mm_trim_and_assemble {
     File    r2_fastqc_html_raw=fastqc_raw_r2.fastqc_html
     String  r1_total_sequences_raw=fastqc_raw_r1.total_sequences
     String  r2_total_sequences_raw=fastqc_raw_r2.total_sequences
+    File    r1_fastqc_raw_docker_installations=fastqc_raw_r1.image_software
+    File    r2_fastqc_raw_docker_installations=fastqc_raw_r2.image_software
+    
     File    read1_trim=trim.read1_trim
     File    read2_trim=trim.read2_trim
     File    r1_fastqc_html_trimmed=fastqc_trim_r1.fastqc_html
@@ -87,6 +90,8 @@ workflow mm_trim_and_assemble {
     String  r2_total_sequences_trimmed=fastqc_trim_r2.total_sequences
     String  r1_percent_gc_trimmed=fastqc_trim_r1.percent_gc
     String  r2_percent_gc_trimmed=fastqc_trim_r2.percent_gc
+    File    r1_fastqc_trim_docker_installations=fastqc_trim_r1.image_software
+    File    r2_fastqc_trim_docker_installations=fastqc_trim_r2.image_software
     #File    sam_file=bowtie2_se.samfile
     File    bamfile=bowtie2_se_to_bam.bamfile
     File    sorted_bam=bowtie2_se_to_bam.sorted_bam
