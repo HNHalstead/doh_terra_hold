@@ -62,13 +62,17 @@ task bowtie2_se_to_bam {
 
     cat BOWTIE2DATE>bowtie2_se_to_bam_software.txt
     echo -e "docker image\t${docker_image}">>bowtie2_se_to_bam_software.txt
+    echo -e "docker image platform:">>bowtie2_se_to_bam_software.txt
+    uname -a>>bowtie2_se_to_bam_software.txt
+    echo -e "main tool(s) used:">>bowtie2_se_to_bam_software.txt
+    echo -e "\tbowtie2\t$bowtie2_v\t\tsequence alignment and sequence analysis">>bowtie2_se_to_bam_software.txt
+    echo -e "\tsamtools\t$samtools_v\t\tset of utilities for interacting with and post-processing short DNA sequence read alignments">>bowtie2_se_to_bam_software.txt
     echo -e "licenses available at:">>bowtie2_se_to_bam_software.txt
     echo -e "\thttps://github.com/BenLangmead/bowtie2/blob/master/LICENSE">>bowtie2_se_to_bam_software.txt
     echo -e "\thttps://github.com/samtools/samtools/blob/develop/LICENSE">>bowtie2_se_to_bam_software.txt
-    printf %"$COLUMNS"s |tr " " "-">>sbowtie2_se_to_bam_software.txt
+    printf '%100s\n' | tr ' ' ->>bowtie2_se_to_bam_software.txt
     dpkg -l>>bowtie2_se_to_bam_software.txt
-    echo -e "bowtie2\t$bowtie2_v\t\tsequence alignment and sequence analysis">>bowtie2_se_to_bam_software.txt
-    echo -e "samtools\t$samtools_v\t\tset of utilities for interacting with and post-processing short DNA sequence read alignments">>bowtie2_se_to_bam_software.txt
+
   }
 
   output {
@@ -113,11 +117,14 @@ task sam_to_bam {
 
     cat DATE>sam_to_bam_software.txt
     echo -e "docker image\t${docker_image}">>sam_to_bam_software.txt
+    echo -e "docker image platform:">>sam_to_bam_software.txt
+    uname -a>>sam_to_bam_software.txt
+    echo -e "main tool used:">>sam_to_bam_software.txt
+    echo -e "samtools\t$samtools_v\t\tset of utilities for interacting with and post-processing short DNA sequence read alignments">>sam_to_bam_software.txt
     echo -e "licenses available at:">>sam_to_bam_software.txt
     echo -e "\thttps://github.com/samtools/samtools/blob/develop/LICENSE">>sam_to_bam_software.txt
-    printf %"$COLUMNS"s |tr " " "-">>sam_to_bam_software.txt
+    printf '%100s\n' | tr ' ' ->>sam_to_bam_software.txt
     dpkg -l>>sam_to_bam_software.txt
-    echo -e "samtools\t$samtools_v\t\tset of utilities for interacting with and post-processing short DNA sequence read alignments">>sam_to_bam_software.txt
   }
 
   output {
@@ -184,13 +191,17 @@ task consensus {
 
    cat DATE>consensus_software.txt
    echo -e "docker image\t${docker_image}">>consensus_software.txt
+   echo -e "docker image platform:">>consensus_software.txt
+   uname -a>>consensus_software.txt
+   echo -e "main tool(s) used:">>consensus_software.txt
+   echo -e "ivar\t$ivar_v\t\tpackage that contains functions broadly useful for viral amplicon-based sequencing">>consensus_software.txt
+   echo -e "samtools\t$samtools_v\t\tset of utilities for interacting with and post-processing short DNA sequence read alignments">>consensus_software.txt
    echo -e "licenses available at:">>consensus_software.txt
    echo -e "\thttps://github.com/andersen-lab/ivar/blob/master/LICENSE">>consensus_software.txt
    echo -e "\thttps://github.com/samtools/samtools/blob/develop/LICENSE">>consensus_software.txt
-   printf %"$COLUMNS"s |tr " " "-">>consensus_software.txt
+   printf '%100s\n' | tr ' ' ->>consensus_software.txt
    dpkg -l>>consensus_software.txt
-   echo -e "ivar\t$ivar_v\t\tpackage that contains functions broadly useful for viral amplicon-based sequencing">>consensus_software.txt
-   echo -e "samtools\t$samtools_v\t\tset of utilities for interacting with and post-processing short DNA sequence read alignments">>consensus_software.txt
+
 
     #variants_num=$(grep "TRUE" ${sra_id}.variants.tsv | wc -l)
     #if [ -z "$variants_num" ] ; then variants_num="0" ; fi

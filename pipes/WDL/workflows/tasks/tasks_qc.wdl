@@ -62,11 +62,13 @@ task fastqc_se {
     echo -e "docker image:\t${docker_image}">>fastqc_se_software.txt
     echo -e "docker image platform:">>fastqc_se_software.txt
     uname -a>>fastqc_se_software.txt
+    echo -e "main tool used:">>fastqc_se_software.txt
+    echo -e "\tFastQC\t$fastqc_v\t\ta quality control tool for high throughput sequence data">>fastqc_se_software.txt
     echo -e "licenses available at:">>fastqc_se_software.txt
     echo -e "\thttps://github.com/s-andrews/FastQC/blob/master/LICENSE">>fastqc_se_software.txt
     printf '%100s\n' | tr ' ' ->>fastqc_se_software.txt
     dpkg -l>>fastqc_se_software.txt
-    echo -e "FastQC\t$fastqc_v\t\ta quality control tool for high throughput sequence data">>fastqc_se_software.txt
+
 
   }
 
@@ -98,11 +100,15 @@ task kraken2 {
 	  String?     kraken2_db = "/kraken2-db"
     Int?        cpus=4
     String      virus_name="Mumps"
+    Int?        cpus = 4
+    String      memory = "16 GB"
+    String      docker_image="staphb/kraken2:2.0.9-beta"
   }
 
   command{
     date | tee DATE
     kraken2 --version | head -n1 | tee VERSION
+    kraken2_v=$(cat VERSION)
     num_reads=$(ls *fastq.gz 2> /dev/nul | wc -l)
     if ! [ -z ${read2} ]; then
       mode="--paired"
@@ -124,6 +130,17 @@ task kraken2 {
     if [ -z "$percentage_virus" ] ; then percentage_virus="0.00" ; fi
     echo $percentage_human | tee PERCENT_HUMAN
     echo $percentage_virus | tee PERCENT_VIRUS
+
+    cat DATE>kraken2_software.txt
+    echo -e "docker image:\t${docker_image}">>kraken2_software.txt
+    echo -e "docker image platform:">>kraken2_software.txt
+    uname -a>>kraken2_software.txt
+    echo -e "main tool used:">>kraken2_software.txt
+    echo -e "\tkraken2\t$kraken2_v\t\ta taxonomic classification tool using exact k-mer matches to achieve high accuracy and fast classification speeds">>kraken2_software.txt
+    echo -e "licenses available at:">>kraken2_software.txt
+    echo -e "\thttps://github.com/DerrickWood/kraken2/blob/master/LICENSE">>kraken2_software.txt
+    printf '%100s\n' | tr ' ' ->>kraken2_software.txt
+    dpkg -l>>kraken2_software.txt
   }
 
   output {
@@ -132,12 +149,13 @@ task kraken2 {
     File 	     kraken_report = "${sra_id}_kraken2_report.txt"
     Float 	   percent_human = read_string("PERCENT_HUMAN")
     Float 	   percent_virus   = read_string("PERCENT_VIRUS")
+    File	     image_software="kraken2_software.txt"
   }
 
   runtime {
-    docker:       "staphb/kraken2:2.0.9-beta"
-    memory:       "16 GB"
-    cpu:          4
+    docker:       "${docker_image}"
+    memory:       "${memory}"
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }
@@ -156,6 +174,7 @@ task stats_n_coverage {
   command{
     date | tee DATE
     samtools --version | head -n1 | tee VERSION
+    samtools_v=$(cat VERSION)
 
     samtools stats ${bamfile} > ${sra_id}.stats.txt
 
@@ -177,6 +196,17 @@ task stats_n_coverage {
     echo $depth | tee DEPTH
     echo $meanbaseq | tee MEANBASEQ
     echo $meanmapq | tee MEANMAPQ
+
+    cat DATE>stats_n_coverage_software.txt
+    echo -e "docker image:\t${docker_image}">>stats_n_coverage_software.txt
+    echo -e "docker image platform:">>stats_n_coverage_software.txt
+    uname -a>>stats_n_coverage_software.txt
+    echo -e "main tool used:">>stats_n_coverage_software.txt
+    echo -e "samtools\t$samtools_v\t\tset of utilities for interacting with and post-processing short DNA sequence read alignments">>stats_n_coverage_software.txt
+    echo -e "licenses available at:">>stats_n_coverage_software.txt
+    echo -e "\thttps://github.com/samtools/samtools/blob/develop/LICENSE">>stats_n_coverage_software.txt
+    printf '%100s\n' | tr ' ' ->>stats_n_coverage_software.txt
+    dpkg -l>>stats_n_coverage_software.txt
   }
 
   output {
@@ -190,6 +220,7 @@ task stats_n_coverage {
     Float      depth = read_string("DEPTH")
     Float      meanbaseq = read_string("MEANBASEQ")
     Float      meanmapq = read_string("MEANMAPQ")
+    File	     image_software="stats_n_coverage_software.txt"
   }
 
   runtime {

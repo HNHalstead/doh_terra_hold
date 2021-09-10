@@ -81,9 +81,10 @@ workflow mm_trim_and_assemble {
     String  r2_total_sequences_raw=fastqc_raw_r2.total_sequences
     File    r1_fastqc_raw_docker_installations=fastqc_raw_r1.image_software
     File    r2_fastqc_raw_docker_installations=fastqc_raw_r2.image_software
-    
+
     File    read1_trim=trim.read1_trim
     File    read2_trim=trim.read2_trim
+    File    trim_docker_installations=trim.image_software
     File    r1_fastqc_html_trimmed=fastqc_trim_r1.fastqc_html
     File    r2_fastqc_html_trimmed=fastqc_trim_r2.fastqc_html
     String  r1_total_sequences_trimmed=fastqc_trim_r1.total_sequences
@@ -96,7 +97,7 @@ workflow mm_trim_and_assemble {
     File    bamfile=bowtie2_se_to_bam.bamfile
     File    sorted_bam=bowtie2_se_to_bam.sorted_bam
     File    indexed_bam=bowtie2_se_to_bam.indexed_bam
-    File    se_to_bam_docker_installations=bowtie2_se_to_bam.image_software
+    File    bowtie2_se_to_bam_docker_installations=bowtie2_se_to_bam.image_software
     File    kraken2_report=kraken2.kraken_report
     Float   percent_human=kraken2.percent_human
 
