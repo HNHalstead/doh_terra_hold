@@ -117,7 +117,7 @@ workflow mm_trim_and_assemble {
     Float      assembly_depth=stats_n_coverage.depth
     Float      assembly_meanbaseq=stats_n_coverage.meanbaseq
     Float      assembly_meanmapq=stats_n_coverage.meanmapq
-    File       assembly_samtools_docker_installations=stats_n_coverage.image_software
+    File       assembly_stats_n_coverage_docker_installations=stats_n_coverage.image_software
 
     #File    sample_variants =consensus.sample_variants
     #String  variant_num=consensus.variant_num
