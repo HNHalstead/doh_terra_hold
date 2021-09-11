@@ -14,6 +14,7 @@ task trim {
   command {
     date | tee DATE
     trimmomatic --version | head -n1 | tee VERSION
+    trimmomatic_v=$(cat VERSION)
 
     trimmomatic SE -phred33 ${read1} ${sra_id}_trimmed_1.fastq.gz \
     ILLUMINACLIP:../Trimmomatic-0.39/adapters/TruSeq3-SE.fa:2:30:10 \
@@ -28,9 +29,9 @@ task trim {
     echo -e "docker image platform:">>trim_software.txt
     uname -a>>trim_software.txt
     echo -e "main tool used:">>trim_software.txt
-    echo -e "samtools\t$samtools_v\t\tset of utilities for interacting with and post-processing short DNA sequence read alignments">>trim_software.txt
+    echo -e "strimmomatic\t$trimmomatic_v\t\ta flexible read trimming tool for Illumina NGS data">>trim_software.txt
     echo -e "licenses available at:">>trim_software.txt
-    echo -e "\thttps://github.com/samtools/samtools/blob/develop/LICENSE">>trim_software.txt
+    echo -e "\thttps://academic.oup.com/bioinformatics/article/30/15/2114/2390096">>trim_software.txt
     printf '%100s\n' | tr ' ' ->>trim_software.txt
     dpkg -l>>trim_software.txt
 
