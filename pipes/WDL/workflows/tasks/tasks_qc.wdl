@@ -166,7 +166,7 @@ task stats_n_coverage {
   input {
     File        bamfile
     String      sra_id
-    String      docker="staphb/samtools:1.10"
+    String      docker_image="staphb/samtools:1.10"
     Int?        cpus = 4
     String?     memory = "16 GB"
   }
@@ -224,7 +224,7 @@ task stats_n_coverage {
   }
 
   runtime {
-    docker:       "~{docker}"
+    docker:       "~{docker_image}"
     memory:       "~{memory}"
     cpu:          cpus
     disks:        "local-disk 100 SSD"
